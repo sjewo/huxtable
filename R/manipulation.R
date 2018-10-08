@@ -87,6 +87,7 @@ add_row_cols <- function (x, y, after, dimno, ...) {
 #' a single row.
 #' @param ht A huxtable.
 #' @param ... Cell contents.
+#' @param fill String to fill in cells if `...` is shorter than table.
 #' @param after Insert the row/column after this position. 0 (the default) inserts as the first row/column.
 #' @param copy_cell_props Copy cell properties from the previous row or column (if after > 0). See [cbind.huxtable()].
 #' @details
@@ -96,14 +97,10 @@ add_row_cols <- function (x, y, after, dimno, ...) {
 #' @export
 #'
 #' @examples
-#' ht <- hux(a = 1:5, b = 1:5, c = 1:5)
-#' insert_row(ht, 2.5, 2.5, 2.5,
-#'       after = 2)
+#' insert_row(jams, c("Blackcurrent", 2.40), after = 2)
 #'
-#' insert_column(ht, 5:1)
-#' insert_column(ht, 5:1, after = 3)
-#' insert_column(ht, 5:1, after = "b")
-insert_column <- function (ht, ..., after = 0, copy_cell_props = TRUE) {
+#' insert_column(jams, "Sugar", fill = "60%", after = 2)
+insert_column <- function (ht, ..., fill = "", after = 0, copy_cell_props = TRUE) {
   # is.count would complain about 0
   assert_that(is.scalar(after), is.number(after) || is.string(after))
   if (is.number(after)) assert_that(after >= 0, after <= ncol(ht))
@@ -120,7 +117,11 @@ insert_column <- function (ht, ..., after = 0, copy_cell_props = TRUE) {
   if (after < ncol(ht)) {
     ht2 <- ht[, seq(after + 1, ncol(ht), 1)]
   }
+
   to_insert <- c(...)
+  n_short <- nrow(ht) - length(to_insert)
+  if (n_short > 0) to_insert <- c(to_insert, rep(fill, length.out = n_short))
+
   res <- if (! is.null(ht1)) cbind(ht1, to_insert, copy_cell_props = copy_cell_props) else to_insert
   res <- if (! is.null(ht2)) cbind(res, ht2) else res
 
@@ -131,7 +132,7 @@ insert_column <- function (ht, ..., after = 0, copy_cell_props = TRUE) {
 #' @rdname insert_column
 #'
 #' @export
-insert_row <- function (ht, ..., after = 0, copy_cell_props = TRUE) {
+insert_row <- function (ht, ..., fill = "", after = 0, copy_cell_props = TRUE) {
   # is.count would complain about 0
   assert_that(is.scalar(after), is.number(after), after >= 0, after <= nrow(ht))
 
@@ -143,7 +144,11 @@ insert_row <- function (ht, ..., after = 0, copy_cell_props = TRUE) {
   if (after < nrow(ht)) {
     ht2 <- ht[seq(after + 1, nrow(ht), 1), ]
   }
+
   to_insert <- c(...)
+  n_short <- ncol(ht) - length(to_insert)
+  if (n_short > 0) to_insert <- c(to_insert, rep(fill, length.out = n_short))
+
   res <- if (! is.null(ht1)) rbind(ht1, to_insert, copy_cell_props = copy_cell_props) else to_insert
   res <- if (! is.null(ht2)) rbind(res, ht2) else res
 
