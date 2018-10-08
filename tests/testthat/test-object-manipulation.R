@@ -203,6 +203,12 @@ test_that('insert_column and insert_row work', {
   expect_true(bold(ht)[1, 2])
   ht <- insert_column(ht_orig, 8, 9, after = 1, copy_cell_props = FALSE)
   expect_false(bold(ht)[1, 2])
+
+  ht <- huxtable(1:5, 1:5, 1:5)
+  ht <- insert_column(ht, 3:4, fill = 0, after = 1)
+  expect_equivalent(ht[, 2], huxtable(c(3, 4, 0, 0 ,0)))
+  ht <- insert_row(ht, 10, 10, fill = 0, after = 1)
+  expect_equivalent(ht[2, ], huxtable(10, 10, 0, 0))
 })
 
 
