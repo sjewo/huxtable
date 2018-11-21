@@ -43,21 +43,40 @@ to_html.huxtable <- function(ht, ...) {
   ## TABLE START ----------
   width <- width(ht)
   if (is.numeric(width)) width <- paste0(width * 100, "%")
-  mstring <- switch(position(ht),
-          left   = "margin-left: 0%; margin-right: auto;",
-          right  = "margin-left: auto; margin-right: 0%;",
-          center = "margin-left: auto; margin-right: auto;"
+
+  margins <- switch(float(ht),
+          "l"     = ,
+          "L"     = ,
+          "left"  = c("0%",  "2em"),
+          "r"     = ,
+          "R"     = ,
+          "right" = c("2em", "0%"),
+          switch(position(ht),
+            "left"   = c("0%"  , "auto"),
+            "right"  = c("auto", "0%"),
+            "center" = c("auto", "auto")
+            )
         )
+  m_string <- sprintf("margin-left: %s; margin-right: %s;", margins[1], margins[2])
 
   height <- height(ht)
-  heightstring <- blank_where({
+  height_string <- blank_where({
     if (is.numeric(height)) height <- paste0(height * 100, "%")
     sprintf("height: %s;", height)
   }, is.na(height))
-  idstring <- blank_where(sprintf(" id=\"%s\"", label(ht)), is.na(label(ht)))
+  float_string <- switch(float(ht),
+          "l" = ,
+          "L" = ,
+          "left" = "float: left;",
+          "r" = ,
+          "R" = ,
+          "right" = "float: right;",
+          "" # default
+        )
+  id_string <- blank_where(sprintf(" id=\"%s\"", label(ht)), is.na(label(ht)))
   table_start <- sprintf(
-        '<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: %s; %s %s"%s>\n',
-        width, mstring, heightstring, idstring)
+        '<table class="huxtable" style="border-collapse: collapse; margin-top: 2em; margin-bottom: 2em; width: %s; %s %s %s"%s>\n',
+        width, m_string, height_string, float_string, id_string)
   if (! is.na(cap <- make_caption(ht, "html"))) {
     vpos <- if (grepl("top", caption_pos(ht))) "top" else "bottom"
     hpos <- get_caption_hpos(ht)

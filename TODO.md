@@ -7,7 +7,14 @@ TODO
 Priority changes
 ================
 
-* Add `set_outer_border_colors` etc.
+* Finish `float`. 
+  - Should you really separate position from float? Presumably position: right means
+    text flows round on the left?
+  - Could call it "table_wrap" and set it to TRUE or FALSE? Then you can set CSS
+    margins appropriately given `position`; and in TeX you can use `wraptable` when
+    table_wrap is TRUE and position is left/right. Problem is that then other values of
+    `float` are invalid... maybe that's fine. OTOH 
+  
 
 * Start using knitr::is_latex_output() etc. to detect output types
 
@@ -177,14 +184,6 @@ Possibles
 
 * Better centring of LaTeX tables and handling of width. Maybe push \resizebox
 
-* Replace latex_float by float and use the CSS float property on the table (deals with text flow)?
-  - As with label, this means different things; also has different values, so
-    if you set float() your code wouldn't work in both HTML and TeX...
-  - Tricky. Of course many things don't work identically between HTML and TeX.
-  - The wrapfig package defines \wraptable which lets text wrap around. It doesn't play nicely
-    with floats anyway, so one option is to have a single float() for all the TeX possibilities.
-  - Alternatively you have e.g. `wraparound()`, and keep `latex_float()` separate.
-  - You can combine options between HTML float (left/right) and wrapfig float.
 
 * rescale numeric row_height and col_width when subsetting, as now under rbind/cbind?
 

@@ -11,6 +11,8 @@ increments reflect backwards-incompatible API changes, not necessarily big chang
 * Bugfix: `caption()` and `height()` weren't playing nicely.
 * Bugfix: `mutate(..., copy_cell_props = FALSE)` was adding a column named `copy_cell_props`.
 * Enhancement: when `stars` is `NULL` in `huxreg`, don't print a note by default.
+* New `float()` property allows left or right floating (text wraps around table) in HTML
+  and TeX. `latex_float()` is soft-deprecated and just sets `float()`.
 
 # huxtable 4.3.0
 

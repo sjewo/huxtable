@@ -115,20 +115,100 @@ caption(ht) <- 'Align by row: l/c/r, col\\_width .2, .8'
 
 # Different kinds of floats
 
+
+Arcu nibh ac augue leo. Consectetur ex nec habitasse est imperdiet curabitur, porta et dapibus.
+Efficitur suscipit pretium phasellus vitae at efficitur quisque dui. Ligula, consequat primis.
+Laoreet conubia dis lectus, egestas et nisl mauris convallis litora. A congue sociis volutpat nulla,
+at neque. Nisl conubia egestas orci turpis augue. Vel litora molestie ante non pretium. Varius et,
+lorem sed tempor sed, curabitur amet velit. Tempor primis ullamcorper nibh. Curae rhoncus, et netus
+erat eros tortor pharetra. Odio metus, interdum dignissim ut ut dui. Penatibus, ad laoreet erat in
+sapien habitasse sit. In fames lacinia gravida proin. Ut congue est felis consectetur adipiscing
+ipsum faucibus. Tortor ultricies sed nisl, aenean, bibendum magnis augue.
+
+
 ```{r}
 ht <- make()
-latex_float(ht) <- 't'
+float(ht) <- 't'
 caption(ht) <- 'latex\\_float t, top of page'
 ht
+```
 
-latex_float(ht) <- 'b'
+Arcu nibh ac augue leo. Consectetur ex nec habitasse est imperdiet curabitur, porta et dapibus.
+Efficitur suscipit pretium phasellus vitae at efficitur quisque dui. Ligula, consequat primis.
+Laoreet conubia dis lectus, egestas et nisl mauris convallis litora. A congue sociis volutpat nulla,
+at neque. Nisl conubia egestas orci turpis augue. Vel litora molestie ante non pretium. Varius et,
+lorem sed tempor sed, curabitur amet velit. Tempor primis ullamcorper nibh. Curae rhoncus, et netus
+erat eros tortor pharetra. Odio metus, interdum dignissim ut ut dui. Penatibus, ad laoreet erat in
+sapien habitasse sit. In fames lacinia gravida proin. Ut congue est felis consectetur adipiscing
+ipsum faucibus. Tortor ultricies sed nisl, aenean, bibendum magnis augue.
+
+```{r}
+float(ht) <- 'b'
 caption(ht) <- 'latex\\_float b, bottom of page'
 ht
+```
 
-latex_float(ht) <- 'h'
+Arcu nibh ac augue leo. Consectetur ex nec habitasse est imperdiet curabitur, porta et dapibus.
+Efficitur suscipit pretium phasellus vitae at efficitur quisque dui. Ligula, consequat primis.
+Laoreet conubia dis lectus, egestas et nisl mauris convallis litora. A congue sociis volutpat nulla,
+at neque. Nisl conubia egestas orci turpis augue. Vel litora molestie ante non pretium. Varius et,
+lorem sed tempor sed, curabitur amet velit. Tempor primis ullamcorper nibh. Curae rhoncus, et netus
+erat eros tortor pharetra. Odio metus, interdum dignissim ut ut dui. Penatibus, ad laoreet erat in
+sapien habitasse sit. In fames lacinia gravida proin. Ut congue est felis consectetur adipiscing
+ipsum faucibus. Tortor ultricies sed nisl, aenean, bibendum magnis augue.
+
+```{r}
+float(ht) <- 'h'
 caption(ht) <- 'latex\\_float h, here'
 ht
 ```
+
+\FloatBarrier
+
+# Left and right floats with wrapping
+
+Arcu nibh ac augue leo. Consectetur ex nec habitasse est imperdiet curabitur, porta et dapibus.
+Efficitur suscipit pretium phasellus vitae at efficitur quisque dui. Ligula, consequat primis.
+Laoreet conubia dis lectus, egestas et nisl mauris convallis litora. A congue sociis volutpat nulla,
+at neque. Nisl conubia egestas orci turpis augue. Vel litora molestie ante non pretium. Varius et,
+lorem sed tempor sed, curabitur amet velit. Tempor primis ullamcorper nibh. Curae rhoncus, et netus
+erat eros tortor pharetra. Odio metus, interdum dignissim ut ut dui. Penatibus, ad laoreet erat in
+sapien habitasse sit. In fames lacinia gravida proin. Ut congue est felis consectetur adipiscing
+ipsum faucibus. Tortor ultricies sed nisl, aenean, bibendum magnis augue.
+
+```{r}
+ht <- make()
+float(ht) <- "l"
+position(ht) <- "left"
+caption(ht) <- "float: l, position left"
+ht
+```
+
+Lorem ipsum dolor sit amet, metus, ipsum volutpat ligula interdum sed nec pharetra. Etiam felis, id
+eget vel. Aliquet velit sed volutpat aliquam velit faucibus, sagittis tellus lacus sit litora. Duis
+hac pulvinar turpis maecenas non finibus egestas. Litora sapien est consequat vel dis efficitur.
+Justo in commodo fermentum interdum nibh mi amet ad. Cubilia in aenean est blandit elit ex elementum
+sodales lacus neque dui ut. Diam duis etiam quis vitae sollicitudin sit. Felis mollis commodo
+commodo sollicitudin penatibus potenti consequat imperdiet consectetur metus. Parturient eu magna,
+cras odio non sed vestibulum turpis suspendisse. Nibh tempus tincidunt massa maecenas taciti
+pretium. Curabitur risus lobortis aptent ut fermentum sed
+
+```{r}
+ht <- make()
+float(ht) <- "right"
+position(ht) <- "right"
+caption(ht) <- "float: right, position right"
+ht
+```
+
+Arcu nibh ac augue leo. Consectetur ex nec habitasse est imperdiet curabitur, porta et dapibus.
+Efficitur suscipit pretium phasellus vitae at efficitur quisque dui. Ligula, consequat primis.
+Laoreet conubia dis lectus, egestas et nisl mauris convallis litora. A congue sociis volutpat nulla,
+at neque. Nisl conubia egestas orci turpis augue. Vel litora molestie ante non pretium. Varius et,
+lorem sed tempor sed, curabitur amet velit. Tempor primis ullamcorper nibh. Curae rhoncus, et netus
+erat eros tortor pharetra. Odio metus, interdum dignissim ut ut dui. Penatibus, ad laoreet erat in
+sapien habitasse sit. In fames lacinia gravida proin. Ut congue est felis consectetur adipiscing
+ipsum faucibus. Tortor ultricies sed nisl, aenean, bibendum magnis augue.
 
 \FloatBarrier
 

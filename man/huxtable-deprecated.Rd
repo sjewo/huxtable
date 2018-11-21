@@ -8,6 +8,9 @@
 \alias{pad_decimal<-}
 \alias{set_pad_decimal}
 \alias{map_pad_decimal}
+\alias{latex_float}
+\alias{latex_float<-}
+\alias{set_latex_float}
 \alias{where}
 \alias{is_a_number}
 \alias{huxtable-deprecated}
@@ -22,6 +25,8 @@ These functions are deprecated and will be removed in future versions of huxtabl
 }
 \details{
 To replace \code{pad_decimal} use \code{\link[=align]{align()}}, e.g. \code{align(ht) <- "."}.
+
+To replace \code{latex_float} use \code{\link[=float]{float()}}.
 
 To replace \code{is_a_number} use e.g. \code{! is.na(as.numeric(x))}
 

@@ -77,10 +77,21 @@ to_latex.huxtable <- function (ht, tabular_only = FALSE, ...){
     right  = c("\\begin{raggedleft}",  "\\par\\end{raggedleft}\n")
   )
 
+  table_env <- switch(float(ht),
+          "left" = ,
+          "l" = c("\\begin{wraptable}{l}%s",         "\\end{wraptable}"),
+          "L" = c("\\begin{wraptable}{L}%s",        "\\end{wraptable}"),
+          "right" = ,
+          "r" = c("\\begin{wraptable}{r}%s",        "\\end{wraptable}"),
+          "R" = c("\\begin{wraptable}{R}%s",        "\\end{wraptable}"),
+          c(sprintf("\\begin{table}[%s]", float(ht)), "\\end{table}")
+        )
+  table_env <- paste0("\n", table_env, "\n")
+  table_env[1] <- sprintf(table_env[1], make_latex_width(ht)) # no-op if this isn't wraptable
   res <- if (grepl("top", caption_pos(ht))) paste0(cap, lab, tabular) else paste0(tabular, cap, lab)
   res <- paste0(
           commands,
-          sprintf("\n\\begin{table}[%s]\n",latex_float(ht)),
+          table_env[1],
           pos_text[1],
           resize_box[1],
           "\n\\begin{threeparttable}\n",
@@ -88,7 +99,7 @@ to_latex.huxtable <- function (ht, tabular_only = FALSE, ...){
           "\\end{threeparttable}\n",
           resize_box[2],
           pos_text[2],
-          "\n\\end{table}\n"
+          table_env[2]
         )
 
   return(maybe_markdown_fence(res))
@@ -398,13 +409,7 @@ build_tabular <- function(ht) {
 
   tenv <- tabular_environment(ht)
   tenv_tex <- paste0(c("\\begin{", "\\end{"), tenv, "}")
-  width_spec <- if (tenv %in% c("tabularx", "tabular*", "tabulary")) {
-    tw <- width(ht)
-    if (is.numeric(tw)) tw <- paste0(tw, default_table_width_unit)
-    paste0("{", tw, "}")
-  } else {
-    ""
-  }
+  width_spec <- if (tenv %in% c("tabularx", "tabular*", "tabulary")) make_latex_width(ht) else ""
 
   colspec_top <- sapply(seq_len(ncol(ht)), function (mycol) {
           sprintf("p{%s}", compute_width(ht, mycol, mycol))
@@ -414,6 +419,15 @@ build_tabular <- function(ht) {
 
   res <- paste0(tenv_tex[1], width_spec, colspec_top, table_body, tenv_tex[2])
   return(res)
+}
+
+
+make_latex_width <- function (ht) {
+  tw <- width(ht)
+  if (is.numeric(tw)) tw <- paste0(tw, default_table_width_unit)
+  tw <- sprintf("{%s}", tw)
+
+  return(tw)
 }
 
 

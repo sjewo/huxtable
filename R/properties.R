@@ -14,7 +14,7 @@ huxtable_cell_attrs <- c("align", "valign", "rowspan", "colspan", "background_co
 huxtable_col_attrs <- c("col_width")
 huxtable_row_attrs <- c("row_height")
 huxtable_table_attrs <- c("width", "height", "position", "caption", "caption_pos",
-  "tabular_environment", "label", "latex_float")
+  "tabular_environment", "label", "float", "latex_float")
 
 
 #' @evalNamespace make_namespace_S3_entries(huxtable_cell_attrs)
@@ -61,7 +61,7 @@ huxtable_env$huxtable_default_attrs <- list(
         position            = "center",
         tabular_environment = "tabularx",
         label               = NA,
-        latex_float         = "h",
+        float               = "h",
         escape_contents     = TRUE,
         na_string           = "",
         bold                = FALSE,
@@ -923,14 +923,29 @@ make_getter_setters("label", "table", check_fun = is.character)
 
 
 #' @template getset-table
-#' @templateVar attr_name latex_float
-#' @templateVar attr_desc Float position for LaTeX
+#' @templateVar attr_name float
+#' @templateVar attr_desc Table float
 #' @templateVar value_param_desc
-#' A length-one character vector, used by LaTeX for positioning the float.
+#' A character string. See below.
 #' @template getset-example
 #' @templateVar attr_val "h"
-#' @details Quick reference: "h" here, "h!" definitely here, "t" top of page, "b" bottom of page, "p" page of
-#' floats. See LaTeX documentation for more details. If you use "H" (definitely here), you must require the
-#' TeX `float` package.
+#' @details
+#' Valid values include `"left"`, `"right"` (or `"l"` or `"r"`), and in LaTeX `"h"` (here) `"t"`
+#' (top of page), `"b"` (bottom of page), `"p"` (page of floats). `"left"` and `"right"` values
+#' position the table to the left or right of text, allowing text to flow around it.
 NULL
-make_getter_setters("latex_float", "table", check_fun = is.character)
+make_getter_setters("float", "table", check_values = c("l", "left", "r", "right", "h", "t", "b",
+      "p", "H", "L", "R"))
+
+#' @aliases latex_float<- set_latex_float
+#' @rdname huxtable-deprecated
+#' @name latex_float
+#' @export
+#' @details
+#' To replace `latex_float` use [float()].
+NULL
+latex_float              <- float
+latex_float.huxtable     <- float.huxtable
+`latex_float<-`          <- `float<-`
+`latex_float<-.huxtable` <- `float<-.huxtable`
+set_latex_float          <- set_float
