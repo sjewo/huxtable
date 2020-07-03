@@ -97,6 +97,26 @@ knit_print.data.frame <- function(x, options, ...) {
   if (! isTRUE(getOption("huxtable.knit_print_df", FALSE))) {
     NextMethod() # probably calls knit_print.default
   } else {
+
+  # begin data.table work around
+  # printing of certain expressions producing
+  # 'data.table' objects should be suppressed
+  # code copyed from https://github.com/rstudio/rmarkdown/commit/37fe385b7bfd38f9c1a328e52641fb7cbd594b7b
+  printable <- TRUE
+  if ("data.table" %in% loadedNamespaces() &&
+      exists("shouldPrint", envir = asNamespace("data.table")))
+  {
+    shouldPrint <- get("shouldPrint", envir = asNamespace("data.table"))
+    printable <- tryCatch(
+      shouldPrint(x) || !inherits(x, "data.table"),
+      error = function(e) TRUE
+    )
+  }
+
+  if (!printable)
+    return()
+  # end data.table work around
+
     ht <- as_huxtable(x)
     df_theme <- getOption("huxtable.knit_print_df_theme", theme_plain)
     assert_that(is.function(df_theme))
